@@ -98,21 +98,65 @@ def cmd_publish():
         print("\n  [DONE]")
 
 
+def cmd_menu():
+    """Interactive menu mode."""
+    while True:
+        print()
+        print("=" * 48)
+        print("  AI Affiliate")
+        print("=" * 48)
+        print("  1. 每日内容生成")
+        print("  2. 查看系统状态")
+        print("  3. 生成内容计划")
+        print("  4. 记录发布")
+        print("  5. 退出")
+        print()
+
+        try:
+            choice = input("  选一个 > ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print()
+            break
+
+        print()
+        if choice == "1":
+            cmd_daily()
+        elif choice == "2":
+            cmd_status()
+        elif choice == "3":
+            cmd_plan()
+        elif choice == "4":
+            cmd_publish()
+        elif choice in ("5", "q", "quit", "exit"):
+            print("  Bye")
+            break
+        else:
+            print("  输入 1-5")
+
+        input("\n  按回车继续...")
+
+
 def main():
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "daily"
+    cmd = sys.argv[1] if len(sys.argv) > 1 else "menu"
 
     commands = {
         "daily": cmd_daily,
         "status": cmd_status,
         "plan": cmd_plan,
         "publish": cmd_publish,
+        "menu": cmd_menu,
     }
 
     action = commands.get(cmd)
     if action:
         action()
     else:
-        print(f"用法: python3 run.py [daily|status|plan|publish]")
+        print("用法:")
+        print("  python3 run.py           # 交互菜单")
+        print("  python3 run.py daily     # 直接生成")
+        print("  python3 run.py status    # 系统状态")
+        print("  python3 run.py plan      # 内容计划")
+        print("  python3 run.py publish   # 记录发布")
 
 
 if __name__ == "__main__":
