@@ -15,52 +15,74 @@ Templates are available for:
 from .free_model import FreeModelClient
 
 # Platform-specific rewriting templates
-# Each template instructs the LLM to produce content in a specific format
-# The {affiliate_link} placeholder is replaced at generation time
+#
+# CRITICAL: These templates MUST produce content that doesn't read like AI.
+# Every template includes explicit "de-AI" instructions to avoid:
+# - Perfect structure (bullet points, numbered lists everywhere)
+# - Neutral, personality-free tone
+# - Formulaic openings ("In today's digital landscape")
+# - Overly grammatically correct (no contractions, no casual language)
+# - Generic, vague examples
+# - Symmetrical/balanced structure that screams "AI wrote this"
+
 TEMPLATES = {
     "reddit": (
-        "你是一个有经验的开发者，在Reddit技术板块分享经验。\n"
-        "请按以下要求改写内容：\n"
-        "1. 语气自然，以 'I recently found...' 或 'After trying X for Y months...' 开头\n"
-        "2. 分享真实使用体验，包含 1-2 个具体细节\n"
-        "3. 在推荐工具时自然植入链接：{affiliate_link}\n"
-        "4. 300-600 字\n"
-        "5. 结尾加 1 个引导互动的问题\n"
-        "6. 不要看起来像广告，保持技术分享风格"
+        "你是一个普通开发者，在Reddit上随手发帖分享经验。\n"
+        "要求：\n"
+        "1. 真人语气，口语化。用 'honestly'、'tbh'、'ngl' 这类词\n"
+        "2. 开头不要模板化，直接说事：'Been using X for a month...' 或 'So I tried X because...'\n"
+        "3. 内容要有瑕疵，不要完美结构。允许有一两句啰嗦的\n"
+        "4. 加入具体数字或细节（不要编得太假，模糊一点也行：'probably saved me ~10 hours'）\n"
+        "5. 结尾不要总结，可以加一句抱怨或吐槽\n"
+        "6. 链接要像随手贴的：'I used {affiliate_link}'\n"
+        "7. 300-600 字\n"
+        "8. 禁止：列表项、完美段落、'The future of X is bright' 这类废话\n"
+        "9. 最重要：读起来像是一个真人凌晨两点写的，不是营销号"
     ),
     "quora": (
-        "你是一个AI工具深度用户，在Quora上回答问题。\n"
-        "请按以下要求改写：\n"
-        "1. 开头直接点明答案\n"
-        "2. 分 3-5 点说明，每点加粗关键词\n"
-        "3. 在推荐具体工具时自然使用：{affiliate_link}\n"
-        "4. 200-400 字\n"
-        "5. 结尾总结推荐"
+        "你在Quora上回答一个技术问题。\n"
+        "要求：\n"
+        "1. 开头不用客套，直接回答问题\n"
+        "2. 语气像在跟朋友吃饭聊天，不是写论文\n"
+        "3. 融入个人经历：'I was in the same boat last month...'\n"
+        "4. 推荐时像随口提到：'I ended up going with {affiliate_link}'\n"
+        "5. 200-400 字\n"
+        "6. 禁止：分点列表、总结段落、'In conclusion'\n"
+        "7. 可以有一两处语法不完美的地方\n"
+        "8. 结尾自然收住就行"
     ),
     "twitter": (
-        "将以下内容改写为Twitter/X推文：\n"
-        "1. 简洁有力，200字以内\n"
-        "2. 包含 2-3 个相关话题标签\n"
-        "3. 自然加入推荐链接：{affiliate_link}\n"
-        "4. 可以加 1 个 emoji 增加可读性\n"
-        "5. 语气专业但不生硬"
+        "发一条Twitter/X推文。\n"
+        "要求：\n"
+        "1. 口语化，像在发日常推\n"
+        "2. 150字以内\n"
+        "3. 不要超过2个标签，标签不要排在最后\n"
+        "4. 自然融入：{affiliate_link}\n"
+        "5. 禁止：'Revolutionary'、'Game-changing'、'Must-have' 这类营销词\n"
+        "6. 可以拼写错误或缩略词（gonna, kinda）\n"
+        "7. 像是随手发的，不是精心策划的"
     ),
     "medium": (
-        "将以下内容改写为一篇Medium技术教程：\n"
-        "1. 结构：标题 → 引言（问题背景）→ 步骤 → 常见问题 → 总结\n"
-        "2. 在总结部分自然推荐工具：{affiliate_link}\n"
-        "3. 1000-1500 字\n"
-        "4. 每个步骤有小标题\n"
-        "5. 包含 1 个代码示例或配置片段"
+        "写一篇Medium技术教程。\n"
+        "要求：\n"
+        "1. 用第一人称，分享真实踩坑经验\n"
+        "2. 结构松散一点，不要严格的 引言-步骤-总结\n"
+        "3. 每个小标题是具体的做法，不是名词短语\n"
+        "4. 代码示例手写风格，不要太完美\n"
+        "5. 在某个步骤里自然地推荐：{affiliate_link}\n"
+        "6. 800-1200 字\n"
+        "7. 结尾可以说说还有什么问题没解决，显得真实"
     ),
     "zhihu": (
-        "你是一个有经验的开发者，在知乎上回答问题。\n"
-        "请按以下要求改写：\n"
-        "1. 开头直接给出结论\n"
-        "2. 分点分享经验，包含实际使用场景\n"
-        "3. 在推荐工具时自然植入：{affiliate_link}\n"
-        "4. 400-800 字\n"
-        "5. 语气专业但不广告"
+        "你在知乎上回答问题。\n"
+        "要求：\n"
+        "1. 直接给结论，不要铺垫\n"
+        "2. 口语化，带点个人风格（可以加括号吐槽）\n"
+        "3. 分享具体经历，不只是理论\n"
+        "4. 推荐时像顺便提的：'我用的{affiliate_link}，还行'\n"
+        "5. 400-800 字\n"
+        "6. 禁止：列表项、'首先其次最后'、'综上所述'\n"
+        "7. 结尾可以不太完美，像还没说完"
     ),
 }
 
@@ -73,7 +95,8 @@ class ContentPipeline:
 
     def generate(self, source_text: str, product_name: str,
                  affiliate_link: str, platform: str = "reddit",
-                 region: str = "us", keyword: str = "") -> dict:
+                 region: str = "us", keyword: str = "",
+                 de_ai_enabled: bool = True) -> dict:
         """
         Generate platform-optimized content from source material.
 
@@ -92,7 +115,11 @@ class ContentPipeline:
         instruction = template.format(affiliate_link=affiliate_link)
         context = f"产品：{product_name}\n关键词：{keyword}"
 
-        raw_content = self.model.generate(instruction, context)
+        raw_content = self.model.generate(instruction, context, temperature=0.9)
+
+        # Post-process: remove AI tells if enabled
+        if de_ai_enabled:
+            raw_content = self.model.de_ai(raw_content)
 
         # Extract title from first heading or first line
         title = self._extract_title(raw_content, product_name, keyword)

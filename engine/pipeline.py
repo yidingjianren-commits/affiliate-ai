@@ -41,6 +41,14 @@ class AffiliatePipeline:
         self.tracker = Tracker()
         self.materials = MaterialManager()
 
+    def load_settings(self) -> dict:
+        """Load global settings with defaults."""
+        path = CONFIG_DIR / "settings.json"
+        if path.exists():
+            with open(path) as f:
+                return json.load(f).get("settings", {})
+        return {}
+
     def load_products(self) -> list:
         """Load product configurations."""
         path = CONFIG_DIR / "products.json"
@@ -108,6 +116,9 @@ class AffiliatePipeline:
             if not all_kws:
                 all_kws = [f"best {display} tutorial", f"how to use {display}"]
 
+            settings = self.load_settings()
+            de_ai_enabled = settings.get("de_ai", {}).get("enabled", True)
+
             # Generate content for this product
             for i in range(count_per_product):
                 for platform in available_platforms:
@@ -122,6 +133,7 @@ class AffiliatePipeline:
                         platform=platform,
                         region=region,
                         keyword=keyword,
+                        de_ai_enabled=de_ai_enabled,
                     )
 
                     # Save to file

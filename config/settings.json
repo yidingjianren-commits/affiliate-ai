@@ -9,6 +9,11 @@
       "min_engagement_score": 60,
       "max_word_count": 2000
     },
+    "de_ai": {
+      "enabled": true,
+      "temperature": 0.9,
+      "second_pass": true
+    },
     "integrations": {
       "affitor_installed": false,
       "promoagent_installed": false,

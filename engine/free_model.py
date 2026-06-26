@@ -46,45 +46,86 @@ class FreeModelClient:
                 available.append(name)
         return available
 
-    def generate(self, instruction: str, context: str = "") -> str:
+    def generate(self, instruction: str, context: str = "", temperature: float = 0.9) -> str:
         """
         Generate content using best available provider.
 
         Args:
             instruction: What to do (e.g., "改写为Reddit帖子，语气自然")
             context: Background info (product name, keywords, etc.)
+            temperature: 0.0-1.0. Higher = more creative/random. Default 0.9 for human-like.
 
         Returns:
             Generated text content
         """
         prompt = f"{instruction}\n\n背景信息：{context}" if context else instruction
 
+        result = ""
         for provider in self._providers:
             try:
                 if provider == "gemini":
-                    return self._call_gemini(prompt)
+                    result = self._call_gemini(prompt, temperature)
                 elif provider == "deepseek":
-                    return self._call_deepseek(prompt)
+                    result = self._call_deepseek(prompt, temperature)
+                if result:
+                    break
             except Exception as e:
                 print(f"  [WARN] {provider} 调用失败: {e}，尝试下一个...")
                 continue
 
-        return self._mock_output(instruction)
+        if not result:
+            return self._mock_output(instruction)
 
-    def _call_gemini(self, prompt: str) -> str:
+        return result
+
+    def de_ai(self, content: str) -> str:
+        """
+        Post-processing pass: remove AI-generated tells.
+        Catches things the main prompt missed.
+
+        Call this on content that looks too polished/AI-generated.
+        """
+        if not self._providers:
+            return content  # Skip in mock mode
+
+        instruction = (
+            "下面这段内容看起来像是AI写的。请改写，让它像真人写的：\n"
+            "1. 去掉所有列表结构，改成连续段落\n"
+            "2. 去掉'I hope this helps'、'In conclusion'这类AI常用语\n"
+            "3. 加一些口语化的词（honestly, yeah, tbh, tbf）\n"
+            "4. 可以把一两句话改成短句或不完整的句子\n"
+            "5. 不要去AI味过重，保持可读性\n"
+            "6. 保留原文的事实信息和链接\n\n"
+            f"原文：\n{content[:4000]}"
+        )
+
+        for provider in self._providers:
+            try:
+                if provider == "gemini":
+                    return self._call_gemini(instruction, temperature=1.0)
+                elif provider == "deepseek":
+                    return self._call_deepseek(instruction, temperature=1.0)
+            except:
+                continue
+        return content
+
+    def _call_gemini(self, prompt: str, temperature: float = 0.0) -> str:
         """Call Google Gemini API (free tier)."""
         key = os.environ["GEMINI_API_KEY"]
         url = self.PROVIDERS_CONFIG["gemini"]["url_tpl"].format(key=key)
         resp = requests.post(
             url,
-            json={"contents": [{"parts": [{"text": prompt[:8000]}]}]},
+            json={
+                "contents": [{"parts": [{"text": prompt[:8000]}]}],
+                "generationConfig": {"temperature": temperature},
+            },
             timeout=60,
         )
         resp.raise_for_status()
         data = resp.json()
         return data["candidates"][0]["content"]["parts"][0]["text"]
 
-    def _call_deepseek(self, prompt: str) -> str:
+    def _call_deepseek(self, prompt: str, temperature: float = 0.0) -> str:
         """Call DeepSeek Chat API."""
         key = os.environ["DEEPSEEK_API_KEY"]
         resp = requests.post(
@@ -93,7 +134,7 @@ class FreeModelClient:
             json={
                 "model": "deepseek-chat",
                 "messages": [{"role": "user", "content": prompt[:6000]}],
-                "temperature": 0.7,
+                "temperature": temperature,
             },
             timeout=60,
         )
