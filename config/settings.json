@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "daily_generation": {
+      "count_per_product": 3,
+      "platforms": ["reddit", "quora", "twitter", "medium"],
+      "default_region": "us"
+    },
+    "quality": {
+      "min_engagement_score": 60,
+      "max_word_count": 2000
+    },
+    "integrations": {
+      "affitor_installed": false,
+      "promoagent_installed": false,
+      "springy_installed": false
+    },
+    "tracking": {
+      "db_path": "data/tracking.db"
+    }
+  }
+}

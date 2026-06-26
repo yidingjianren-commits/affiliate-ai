@@ -1,0 +1,84 @@
+{
+  "products": [
+    {
+      "name": "cursor",
+      "display": "Cursor",
+      "url": "https://cursor.sh",
+      "affiliate_link": "https://cursor.sh/?referral=YOUR_CODE",
+      "commission": "30% recurring, ~$6/user/month",
+      "category": "ai_coding",
+      "tags": ["ai", "coding", "IDE"],
+      "platforms": ["reddit", "twitter", "medium", "quora"],
+      "regions": ["us", "cn", "sea"],
+      "content_angles": [
+        "AI code editor 入门教程",
+        "Cursor vs Copilot 对比",
+        "从 VSCode 迁移到 Cursor 指南"
+      ]
+    },
+    {
+      "name": "windsurf",
+      "display": "Windsurf",
+      "url": "https://codeium.com/windsurf",
+      "affiliate_link": "https://codeium.com/referral/YOUR_CODE",
+      "commission": "20% recurring, ~$3-5/user/month",
+      "category": "ai_coding",
+      "tags": ["ai", "coding", "IDE", "free"],
+      "platforms": ["reddit", "quora", "twitter"],
+      "regions": ["us", "cn"],
+      "content_angles": [
+        "免费 AI IDE 推荐",
+        "Windsurf 使用技巧",
+        "Windsurf vs Cursor 深度对比"
+      ]
+    },
+    {
+      "name": "vultr",
+      "display": "Vultr",
+      "url": "https://vultr.com",
+      "affiliate_link": "https://vultr.com/?ref=YOUR_CODE",
+      "commission": "$50-200 one-time per user",
+      "category": "cloud",
+      "tags": ["vps", "cloud", "server", "deploy"],
+      "platforms": ["reddit", "medium", "quora"],
+      "regions": ["us", "sea", "cn"],
+      "content_angles": [
+        "AI app 部署 VPS 选择指南",
+        "Vultr vs DigitalOcean 对比",
+        "最便宜的 AI 部署方案"
+      ]
+    },
+    {
+      "name": "n8n",
+      "display": "n8n",
+      "url": "https://n8n.io",
+      "affiliate_link": "https://n8n.io/?ref=YOUR_CODE",
+      "commission": "20% recurring",
+      "category": "automation",
+      "tags": ["automation", "workflow", "ai"],
+      "platforms": ["reddit", "medium", "twitter"],
+      "regions": ["us", "eu"],
+      "content_angles": [
+        "AI 工作流自动化教程",
+        "n8n 入门到精通",
+        "用 n8n 搭建 AI Agent"
+      ]
+    },
+    {
+      "name": "adsPower",
+      "display": "AdsPower",
+      "url": "https://adspower.net",
+      "affiliate_link": "https://adspower.net/?ref=YOUR_CODE",
+      "commission": "30% recurring",
+      "category": "browser",
+      "tags": ["fingerprint", "browser", "multi-account"],
+      "platforms": ["zhihu", "reddit", "quora"],
+      "regions": ["cn", "sea"],
+      "content_angles": [
+        "跨境电商多账号管理",
+        "指纹浏览器推荐",
+        "AdsPower 使用教程"
+      ]
+    }
+  ]
+}

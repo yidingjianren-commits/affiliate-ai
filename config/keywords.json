@@ -1,0 +1,47 @@
+{
+  "cursor": {
+    "primary": [
+      "best AI code editor",
+      "Cursor AI IDE review",
+      "how to use Cursor",
+      "Cursor vs GitHub Copilot",
+      "AI coding assistant 2026",
+      "Cursor tips and tricks",
+      "migrate from VSCode to Cursor"
+    ],
+    "chinese": [
+      "Cursor 使用教程",
+      "AI 编程工具推荐",
+      "Cursor 替代 Copilot",
+      "Cursor 中文配置指南"
+    ]
+  },
+  "windsurf": {
+    "primary": [
+      "Windsurf IDE review",
+      "free AI coding assistant",
+      "Windsurf vs Copilot",
+      "best free IDE for AI"
+    ]
+  },
+  "vultr": {
+    "primary": [
+      "best VPS for AI",
+      "cheap VPS hosting 2026",
+      "deploy AI app on VPS",
+      "Vultr vs DigitalOcean"
+    ],
+    "chinese": [
+      "VPS 服务器推荐",
+      "AI 应用部署教程",
+      "海外服务器选择",
+      "Vultr 注册教程"
+    ]
+  },
+  "common": [
+    "how to build AI app",
+    "best AI tools 2026",
+    "AI agent tutorial",
+    "AI workflow automation"
+  ]
+}

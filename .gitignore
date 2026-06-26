@@ -1,0 +1,31 @@
+# Environment
+.env
+*.key
+**/secrets*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Cache
+.cache/
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data
+data/*.db
+output/**/*.md
+!output/.gitkeep
